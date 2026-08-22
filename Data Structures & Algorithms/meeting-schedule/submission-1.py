@@ -8,12 +8,14 @@ class Interval(object):
 
 class Solution:
     def canAttendMeetings(self, intervals: List[Interval]) -> bool:
-        intervals = [[x.start, x.end] for x in intervals]
-        intervals = sorted(intervals, key=lambda x:x[0])
-        prev = None
-        for start, end in intervals:
-            if prev and prev[-1] > start:
+        intervals = sorted(intervals, key = lambda x:x.start)
+        stack = []
+
+        for x in intervals:
+            a = x.start
+            b = x.end
+            if stack and stack[-1][-1] > a:
                 return False
-            else:
-                prev = [start, end]
+            stack.append([a, b])
+        
         return True
